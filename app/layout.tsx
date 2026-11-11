@@ -10,7 +10,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "SGE - Inventory Management System",
+  title: "RackIT - Inventory Management System",
   description: "Inventory Management System for SGE",
 };
 

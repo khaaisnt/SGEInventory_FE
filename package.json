@@ -16,9 +16,12 @@
     "next": "16.4.4",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-hot-toast": "^2.6.1",
+    "tailwind-merge": "^3.7.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {
+    "@iconify/react": "^6.0.4",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

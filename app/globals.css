@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #fbfbfb;
+  --color-foreground: #171717;
+  --color-primary-100: #e2f0fc;
+  --color-primary-300: #86c8f3;
+  --color-primary-600: #1072b9;
+  --color-primary-900: #103756;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: Plus Jakarta Sans;
 }
