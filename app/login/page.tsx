@@ -50,8 +50,14 @@ const LoginPage = () => {
           <Image src="/assets/logo.png" alt="logo" width={65} height={65} />
           <h2 className="mb-2 mt-4 text-3xl font-bold text-primary-900 lg:text-4xl">
             Welcome back to <br />
-            <span className="text-primary-600">
-              Rack <span className="text-primary-900">IT</span>
+            <span
+              className="mb-2 text-4xl  font-bold tracking-tight
+             [-webkit-text-stroke:4px_white] 
+             [paint-order:stroke_fill] 
+             drop-shadow-[0_2px_3px_rgba(0,0,0,0.2)]"
+            >
+              <span className="text-primary-600">Rack</span>
+              <span className="text-primary-900">IT</span>
             </span>
           </h2>
           <p className="font-light text-primary-900">
