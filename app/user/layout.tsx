@@ -15,7 +15,7 @@ export default function RootLayout({
     <div className="flex min-h-screen">
       <Sidebar role="user" className="shrink-0" />
       <div className="flex min-w-0 flex-1 flex-col">
-        <main className="max-w-screen flex-1 overflow-y-auto p-4">
+        <main className="max-w-full flex-1 overflow-y-auto p-4">
           {children}
         </main>
       </div>

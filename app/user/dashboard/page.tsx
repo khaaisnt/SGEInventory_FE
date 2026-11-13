@@ -1,11 +1,15 @@
+import Header from "@/components/layout/header";
 import React from "react";
 
 const DashboardUser = () => {
   return (
-    <main className="flex">
+    <main>
       <section>
-        <h4 className="font-bold text-2xl text-primary-900">Dashboard</h4>
-        <p>Status Request</p>
+        <Header />
+        <div className="my-10 flex gap-3">
+          <div className="w-1 bg-primary-600 rounded-full"></div>
+          <h5 className="font-bold text-lg text-primary-900">Status Request</h5>
+        </div>
       </section>
     </main>
   );
