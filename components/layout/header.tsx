@@ -1,7 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-export default function Header() {
+interface HeaderProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export default function Header({
+  title = "Hello, there!",
+  subtitle = "Here's your request overview",
+}: HeaderProps) {
   return (
     <div className="relative isolate w-full overflow-hidden rounded-2xl bg-linear-to-r from-apricot-white to-primary-100 px-6 py-8 text-primary-600 shadow-md">
       <span
@@ -22,10 +30,8 @@ export default function Header() {
       />
       <div className="relative z-10 flex w-full items-center justify-between">
         <div className="relative z-10">
-          <h1 className="font-bold text-5xl mb-2">Hello, there!</h1>
-          <h4 className="font-medium text-2xl">
-            Here&apos;s your request overview
-          </h4>
+          <h1 className="font-bold text-2xl md:text-5xl mb-2">{title}</h1>
+          <h4 className="font-medium text-lg md:text-2xl">{subtitle}</h4>
         </div>
         <div className="relative z-10">
           <Image
