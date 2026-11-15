@@ -1,8 +1,53 @@
+"use client";
+
 import Button from "@/components/atoms/button";
 import Input from "@/components/atoms/input";
 import Image from "next/image";
+import { useRegister } from "./services/useRegister.service";
+import { useForm } from "react-hook-form";
+import type { RegisterType } from "./types/register.type";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "./validations/register.schema";
+
+interface RegisterFormValues extends RegisterType {
+  confirmPassword: string;
+}
 
 const RegisterPage = () => {
+  const { mutate, status } = useRegister();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    resolver: yupResolver(registerSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      contact: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = ({
+    fullName,
+    email,
+    password,
+    contact,
+  }: RegisterFormValues) => {
+    mutate(
+      { fullName, email, password, contact },
+      {
+        onSuccess: () => {
+          reset();
+        },
+      },
+    );
+  };
+
   return (
     <main className="min-h-screen w-full md:grid md:grid-cols-2">
       <section className="relative hidden h-screen p-6 md:block">
@@ -40,39 +85,57 @@ const RegisterPage = () => {
             Create an account
           </h1>
 
-          <Input placeholder="Full Name" placeholderIcon="bx:user" fullWidth />
-          <Input
-            placeholder="Student ID Number"
-            placeholderIcon="energy-icons:credit-card-20-bold"
-            type="number"
-            fullWidth
-          />
-          <Input
-            placeholder="Phone Number"
-            placeholderIcon="bx:phone"
-            type="number"
-            fullWidth
-          />
-          <Input
-            placeholder="Email"
-            placeholderIcon="codicon:mail"
-            type="email"
-            fullWidth
-          />
-          <Input
-            placeholder="Password"
-            placeholderIcon="bx:lock"
-            type="password"
-            fullWidth
-          />
-          <Input
-            placeholder="Confirm Password"
-            placeholderIcon="bx:lock"
-            type="password"
-            fullWidth
-          />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              placeholder="Full Name"
+              placeholderIcon="bx:user"
+              fullWidth
+              {...register("fullName")}
+              error={errors.fullName?.message}
+            />
+            <Input
+              placeholder="Student ID Number"
+              placeholderIcon="energy-icons:credit-card-20-bold"
+              type="number"
+              fullWidth
+            />
+            <Input
+              placeholder="Phone Number"
+              placeholderIcon="bx:phone"
+              type="number"
+              fullWidth
+              {...register("contact")}
+              error={errors.contact?.message}
+            />
+            <Input
+              placeholder="Email"
+              placeholderIcon="codicon:mail"
+              type="email"
+              fullWidth
+              {...register("email")}
+              error={errors.email?.message}
+            />
+            <Input
+              placeholder="Password"
+              placeholderIcon="bx:lock"
+              type="password"
+              fullWidth
+              {...register("password")}
+              error={errors.password?.message}
+            />
+            <Input
+              placeholder="Confirm Password"
+              placeholderIcon="bx:lock"
+              type="password"
+              fullWidth
+              {...register("confirmPassword")}
+              error={errors.confirmPassword?.message}
+            />
 
-          <Button fullWidth>Get Started</Button>
+            <Button type="submit" fullWidth disabled={status === "pending"}>
+              {status === "pending" ? "Loading..." : "Get Started"}
+            </Button>
+          </form>
 
           <div className="mt-4 text-sm text-primary-900">
             <p>

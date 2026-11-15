@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import type { InputHTMLAttributes, Ref, TextareaHTMLAttributes } from "react";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
@@ -33,6 +33,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
       id,
       disabled,
       required,
+      type = "text",
       multiline = false,
       rows = 3,
       textareaProps,
@@ -44,10 +45,13 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
     ref,
   ) => {
     const inputId = id;
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const isPassword = type === "password";
 
     const fieldClassName = cn(
       "bg-[#efefef] rounded-[16px] px-4 py-2.5 outline-none transition-all duration-200",
       placeholderIcon && "pl-11",
+      isPassword && "pr-11",
       "placeholder:text-gray-400 placeholder:text-sm",
       !disabled
         ? "text-gray-800 focus:ring-2 focus:ring-primary-600"
@@ -117,9 +121,34 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
               placeholder={placeholder}
               defaultValue={defaultValue}
               value={value}
+              type={isPassword && isPasswordVisible ? "text" : type}
               className={fieldClassName}
               {...props}
             />
+          )}
+          {!multiline && isPassword && (
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible((visible) => !visible)}
+              disabled={disabled}
+              aria-label={
+                isPasswordVisible
+                  ? "Sembunyikan password"
+                  : "Tampilkan password"
+              }
+              aria-pressed={isPasswordVisible}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 transition-colors hover:text-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Icon
+                icon={
+                  isPasswordVisible
+                    ? "material-symbols:visibility-off-outline"
+                    : "material-symbols:visibility-outline"
+                }
+                aria-hidden="true"
+                className="size-5"
+              />
+            </button>
           )}
         </div>
 
