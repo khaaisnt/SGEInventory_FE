@@ -1,9 +1,39 @@
+"use client";
+
 import Button from "@/components/atoms/button";
 import Input from "@/components/atoms/input";
 import Image from "next/image";
 import Link from "next/link";
+import { useLogin } from "./services/useLogin.service";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginType } from "./types/login.type";
+import { loginSchema } from "./validations/login.schema";
 
 const LoginPage = () => {
+  const { mutate, status } = useLogin();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginType>({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: LoginType) => {
+    mutate(data, {
+      onSuccess: () => {
+        reset();
+      },
+    });
+  };
+
   return (
     <main className="min-h-screen w-full md:grid md:grid-cols-2">
       <section className="flex min-h-screen w-full items-center justify-center px-4 py-8 sm:px-8 md:px-10 lg:px-16">
@@ -20,15 +50,21 @@ const LoginPage = () => {
             placeholderIcon="bx:user"
             type="email"
             fullWidth
+            {...register("email")}
+            error={errors.email?.message}
           />
           <Input
             placeholder="Password"
             placeholderIcon="bx:lock"
             type="password"
             fullWidth
+            {...register("password")}
+            error={errors.password?.message}
           />
 
-          <Button fullWidth>Sign In</Button>
+          <Button fullWidth onClick={handleSubmit(onSubmit)}>
+            {status === "pending" ? "Loading..." : "Sign In"}
+          </Button>
           <Link href="/register" className="text-center">
             <Button variant="outline" fullWidth className="mt-2">
               Create an account
