@@ -30,17 +30,17 @@ const menuItems: Record<SidebarRole, SidebarItem[]> = {
     },
     {
       name: "Borrow Request",
-      path: "/user/borrow-request",
+      path: "/user/borrow",
       icon: "coolicons:clipboard-list",
     },
     {
       name: "Storage Request",
-      path: "/user/storage-request",
+      path: "/user/storage",
       icon: "keyline-icons:package-plus",
     },
     {
       name: "Storage Items",
-      path: "/user/storage-items",
+      path: "/user/items",
       icon: "majesticons:checkbox-list-detail",
     },
     {
@@ -184,7 +184,7 @@ const Sidebar = ({ role, className }: SidebarProps) => {
                         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
                         isActive
                           ? "bg-primary-600 font-semibold text-white"
-                          : "text-primary-900 hover:bg-primary-100 hover:text-primary-900",
+                          : "text-primary-900 font-medium hover:bg-primary-100 hover:text-primary-900",
                         isCollapsed && "md:justify-center md:px-2",
                       )}
                     >
@@ -199,6 +199,7 @@ const Sidebar = ({ role, className }: SidebarProps) => {
             </ul>
           </nav>
           <div className="mt-auto pt-4">
+            <hr className="mb-2 text-primary-600" />
             <button
               type="button"
               onClick={handleLogout}

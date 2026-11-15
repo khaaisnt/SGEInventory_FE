@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  placeholderIcon?: string; 
+  placeholderIcon?: string;
   error?: string;
   fullWidth?: boolean;
   labelClassName?: string;
@@ -69,8 +69,8 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
           <label
             htmlFor={inputId}
             className={cn(
-              "mb-2 text-sm",
-              disabled ? "text-gray-400" : "text-gray-700",
+              "mb-2 text-sm font-bold",
+              disabled ? "text-gray-400" : "text-primary-900",
               error && "text-red-500",
               labelClassName,
             )}
