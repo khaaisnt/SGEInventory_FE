@@ -11,8 +11,7 @@ export interface DropdownOption {
   disabled?: boolean;
 }
 
-export interface DropdownProps
-  extends SelectHTMLAttributes<HTMLSelectElement> {
+export interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: DropdownOption[];
   label?: string;
   placeholder?: string;
@@ -45,18 +44,14 @@ const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
 
     return (
       <div
-        className={cn(
-          "flex flex-col",
-          fullWidth && "w-full",
-          wrapperClassName,
-        )}
+        className={cn("flex flex-col", fullWidth && "w-full", wrapperClassName)}
       >
         {label && (
           <label
             htmlFor={selectId}
             className={cn(
-              "mb-2 text-sm",
-              disabled ? "text-gray-400" : "text-gray-700",
+              "mb-2 text-sm font-bold",
+              disabled ? "text-gray-400" : "text-primary-900",
               error && "text-red-500",
               labelClassName,
             )}

@@ -9,6 +9,7 @@ interface RegisterResponse {
   data: [
     id: number,
     fullName: string,
+    nim: string,
     email: string,
     contact: string,
     role: string,

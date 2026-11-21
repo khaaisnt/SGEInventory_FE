@@ -37,126 +37,157 @@ const BorrowPage = () => {
 
   return (
     <main>
-      <section>
-        <Header
-          title="Borrow"
-          subtitle="Complete the form below to request the items you need!"
-        />
-        <div className="mt-8 flex flex-col gap-5">
-          <div className="w-full bg-white shadow-md rounded-2xl p-4">
-            <div className="flex gap-2 items-center mb-2">
-              <div className="bg-primary-100 p-2 rounded-xl">
-                <Icon
-                  icon={"ri:team-fill"}
-                  className="text-xl text-primary-900"
-                />
-              </div>
-              <p className="text-xl font-bold text-primary-900">
-                Applicant Institution
-              </p>
+      <Header
+        title="Borrow"
+        subtitle="Complete the form below to request the items you need!"
+      />
+      <div className="mt-8 flex flex-col gap-5">
+        <section
+          aria-labelledby="institution-heading"
+          className="w-full rounded-2xl bg-white p-4 shadow-md"
+        >
+          <div className="mb-2 flex items-center gap-2">
+            <div aria-hidden="true" className="rounded-xl bg-primary-100 p-2">
+              <Icon icon="ri:team-fill" className="text-xl text-primary-900" />
             </div>
-            <Dropdown
-              placeholder="Select your institution"
-              options={[
-                { label: "BEM", value: "BEM" },
-                { label: "BCC", value: "BCC" },
-              ]}
-              required
-              fullWidth
-            />
+            <h2
+              id="institution-heading"
+              className="text-xl font-bold text-primary-900"
+            >
+              Applicant Institution
+            </h2>
           </div>
-          <div className="w-full bg-white shadow-md rounded-2xl p-4">
-            <div className="flex gap-2 items-center mb-2">
-              <div className="bg-primary-100 p-2 rounded-xl">
-                <Icon
-                  icon={"lucide-extended:package-open-duotone"}
-                  className="text-xl text-primary-900"
-                />
-              </div>
-              <p className="text-xl font-bold text-primary-900">
-                Items to Borrow
-              </p>
+          <Dropdown
+            placeholder="Select your institution"
+            options={[
+              { label: "BEM", value: "BEM" },
+              { label: "BCC", value: "BCC" },
+            ]}
+            required
+            fullWidth
+          />
+        </section>
+
+        <section
+          aria-labelledby="borrow-items-heading"
+          className="w-full rounded-2xl bg-white p-4 shadow-md"
+        >
+          <div className="mb-2 flex items-center gap-2">
+            <div aria-hidden="true" className="rounded-xl bg-primary-100 p-2">
+              <Icon
+                icon="lucide-extended:package-open-duotone"
+                className="text-xl text-primary-900"
+              />
             </div>
-            <div className="mb-2 space-y-3">
-              {borrowItems.map((item, index) => (
-                <div key={item.id} className="flex items-center gap-2">
-                  <Dropdown
-                    aria-label={`Item ${index + 1}`}
-                    placeholder="Input items"
-                    options={[
-                      { label: "BEM", value: "BEM" },
-                      { label: "BCC", value: "BCC" },
-                    ]}
-                    value={item.value}
-                    onChange={(event) =>
-                      updateItem(item.id, event.target.value)
-                    }
-                    required
-                    fullWidth
-                    wrapperClassName="mb-0 min-w-0 flex-1"
-                  />
-                  <div className="flex shrink-0 items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => updateQuantity(item.id, -1)}
-                      disabled={item.quantity === 1}
-                      aria-label={`Kurangi jumlah item ${index + 1}`}
-                      className="flex size-6 items-center justify-center rounded-lg bg-primary-600 text-white transition-colors hover:bg-primary-900 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      <Icon icon="material-symbols:remove" className="size-5" />
-                    </button>
-                    <span
-                      aria-live="polite"
-                      aria-label={`Jumlah ${item.quantity}`}
-                      className="w-6 text-center font-semibold text-primary-900"
-                    >
-                      {item.quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => updateQuantity(item.id, 1)}
-                      aria-label={`Tambah jumlah item ${index + 1}`}
-                      className="flex size-6 items-center justify-center rounded-lg bg-primary-600 text-white transition-colors hover:bg-primary-900 cursor-pointer"
-                    >
-                      <Icon icon="material-symbols:add" className="size-5" />
-                    </button>
-                  </div>
+            <h2
+              id="borrow-items-heading"
+              className="text-xl font-bold text-primary-900"
+            >
+              Items to Borrow
+            </h2>
+          </div>
+          <ul className="mb-2 space-y-3">
+            {borrowItems.map((item, index) => (
+              <li key={item.id} className="flex items-center gap-2">
+                <Dropdown
+                  aria-label={`Item ${index + 1}`}
+                  placeholder="Input items"
+                  options={[
+                    { label: "BEM", value: "BEM" },
+                    { label: "BCC", value: "BCC" },
+                  ]}
+                  value={item.value}
+                  onChange={(event) => updateItem(item.id, event.target.value)}
+                  required
+                  fullWidth
+                  wrapperClassName="mb-0 min-w-0 flex-1"
+                />
+                <div className="flex shrink-0 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, -1)}
+                    disabled={item.quantity === 1}
+                    aria-label={`Kurangi jumlah item ${index + 1}`}
+                    className="flex size-6 cursor-pointer items-center justify-center rounded-lg bg-primary-600 text-white transition-colors hover:bg-primary-900 disabled:cursor-not-allowed"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      icon="material-symbols:remove"
+                      className="size-5"
+                    />
+                  </button>
+                  <span
+                    aria-live="polite"
+                    aria-label={`Jumlah ${item.quantity}`}
+                    className="w-6 text-center font-semibold text-primary-900"
+                  >
+                    {item.quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, 1)}
+                    aria-label={`Tambah jumlah item ${index + 1}`}
+                    className="flex size-6 cursor-pointer items-center justify-center rounded-lg bg-primary-600 text-white transition-colors hover:bg-primary-900"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      icon="material-symbols:add"
+                      className="size-5"
+                    />
+                  </button>
                 </div>
-              ))}
+              </li>
+            ))}
+          </ul>
+          <Button type="button" fullWidth onClick={addBorrowItem}>
+            Add more Items
+          </Button>
+        </section>
+
+        <section
+          aria-labelledby="borrow-detail-heading"
+          className="w-full rounded-2xl bg-white p-4 shadow-md"
+        >
+          <div className="mb-2 flex items-center gap-2">
+            <div aria-hidden="true" className="rounded-xl bg-primary-100 p-2">
+              <Icon
+                icon="coolicons:clipboard-list"
+                className="text-xl text-primary-900"
+              />
             </div>
-            <Button type="button" fullWidth onClick={addBorrowItem}>
-              Add more Items
-            </Button>
+            <h2
+              id="borrow-detail-heading"
+              className="text-xl font-bold text-primary-900"
+            >
+              Borrow Detail
+            </h2>
           </div>
-          <div className="w-full bg-white shadow-md rounded-2xl p-4">
-            <div className="flex gap-2 items-center mb-2">
-              <div className="bg-primary-100 p-2 rounded-xl">
-                <Icon
-                  icon={"coolicons:clipboard-list"}
-                  className="text-xl text-primary-900"
-                />
-              </div>
-              <p className="text-xl font-bold text-primary-900">
-                Borrow Detail
-              </p>
-            </div>
+          <Input
+            type="text"
+            label="Borrowing Purpose"
+            placeholder="e.g. for a seminar event, workshop, or project..."
+            fullWidth
+            multiline
+          />
+          <div className="flex flex-col gap-2 md:flex-row">
             <Input
-              type="text"
-              label="Borrowing Purpose"
-              placeholder="e.g. for a seminar event, workshop,  or project..."
+              label="Pick up date"
+              type="date"
+              placeholderIcon="cuida:calendar-outline"
               fullWidth
-              multiline
             />
-            <div className="flex flex-col md:flex-row gap-2">
-              <Input label="Pick up date" type="date" fullWidth />
-              <Input label="Return date" type="date" fullWidth />
-            </div>
+            <Input
+              label="Return date"
+              type="date"
+              placeholderIcon="cuida:calendar-outline"
+              fullWidth
+            />
           </div>
-        </div>
-        <div className="mt-5 w-full flex justify-end">
-          <Button>Submit request</Button>
-        </div>
-      </section>
+        </section>
+      </div>
+      <div className="mt-5 flex w-full justify-end">
+        <Button type="button">Submit request</Button>
+      </div>
     </main>
   );
 };

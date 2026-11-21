@@ -26,6 +26,7 @@ const RegisterPage = () => {
     defaultValues: {
       fullName: "",
       email: "",
+      nim: "",
       contact: "",
       password: "",
       confirmPassword: "",
@@ -35,11 +36,12 @@ const RegisterPage = () => {
   const onSubmit = ({
     fullName,
     email,
+    nim,
     password,
     contact,
   }: RegisterFormValues) => {
     mutate(
-      { fullName, email, password, contact },
+      { fullName, email, nim, password, contact },
       {
         onSuccess: () => {
           reset();
@@ -98,6 +100,8 @@ const RegisterPage = () => {
               placeholderIcon="energy-icons:credit-card-20-bold"
               type="number"
               fullWidth
+              {...register("nim")}
+              error={errors.nim?.message}
             />
             <Input
               placeholder="Phone Number"

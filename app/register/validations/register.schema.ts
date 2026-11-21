@@ -3,6 +3,7 @@ import * as yup from "yup";
 export const registerSchema = yup.object({
   fullName: yup.string().required("Nama lengkap harus diisi"),
   email: yup.string().email("Email tidak valid").required("Email harus diisi"),
+  nim: yup.string().required("NIM harus diisi"),
   password: yup
     .string()
     .min(8, "Kata sandi minimal 8 karakter")

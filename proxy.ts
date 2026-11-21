@@ -13,17 +13,22 @@ async function getVerifiedRole(token?: string): Promise<UserRole | null> {
   const secret = process.env.CHIPER_KEY;
   if (!token || !secret) return null;
 
+  console.log("DEBUG TOKEN ADA?:", Boolean(token));
+  console.log("DEBUG SECRET ADA?:", Boolean(secret));
+
   try {
     const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(secret),
       { algorithms: ["HS256"] },
     );
+    console.log("DEBUG JWT PAYLOAD:", payload);
     const role =
       typeof payload.role === "string" ? payload.role.toUpperCase() : null;
 
     return role === "USER" || role === "ADMIN" ? role : null;
-  } catch {
+  } catch (err) {
+    console.error("JWT VERIFY FAILED:", err);
     return null;
   }
 }
@@ -44,9 +49,7 @@ export async function proxy(request: NextRequest) {
 
   if (isPublicAuthPage) {
     if (role) {
-      return NextResponse.redirect(
-        new URL(dashboardByRole[role], request.url),
-      );
+      return NextResponse.redirect(new URL(dashboardByRole[role], request.url));
     }
 
     return NextResponse.next();
@@ -64,9 +67,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isUserRoute && role === "ADMIN") {
-    return NextResponse.redirect(
-      new URL(dashboardByRole.ADMIN, request.url),
-    );
+    return NextResponse.redirect(new URL(dashboardByRole.ADMIN, request.url));
   }
 
   if (isAdminRoute && role === "USER") {
@@ -77,5 +78,11 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/login", "/register", "/user/:path*", "/administrator/:path*"],
+  matcher: [
+    "/",
+    "/login",
+    "/register",
+    "/user/:path*",
+    "/administrator/:path*",
+  ],
 };
