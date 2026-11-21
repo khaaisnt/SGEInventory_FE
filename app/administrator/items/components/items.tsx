@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 import { useGetItems } from "../services/getItems.service";
 import CreateItem from "./createItem";
 import SearchBox from "@/components/molecules/searchbox";
+import DeleteItem from "./deleteItem";
+import UpdateItem from "./updateItem";
 
 export default function Items() {
   const { data, isLoading, isError, error, refetch, isFetching } =
@@ -24,8 +26,8 @@ export default function Items() {
         </div>
 
         <div className="flex gap-2">
-            <SearchBox onSearch={(query) => console.log(query)} />
-            <CreateItem />
+          <SearchBox onSearch={(query) => console.log(query)} />
+          <CreateItem />
         </div>
       </div>
 
@@ -54,13 +56,13 @@ export default function Items() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center text-gray-500">
+                  <td colSpan={5} className="p-6 text-center text-gray-500">
                     Loading items...
                   </td>
                 </tr>
               ) : isError ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center" role="alert">
+                  <td colSpan={5} className="p-6 text-center" role="alert">
                     <p className="mb-3 text-red-600">
                       {error instanceof Error
                         ? error.message
@@ -78,7 +80,7 @@ export default function Items() {
                 </tr>
               ) : items.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center text-gray-500">
+                  <td colSpan={5} className="p-6 text-center text-gray-500">
                     Belum ada barang.
                   </td>
                 </tr>
@@ -96,7 +98,12 @@ export default function Items() {
                     <td className="p-3 border-r text-center">
                       {item.totalQuantity}
                     </td>
-                    <td className="p-3">-</td>
+                    <td className="p-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <UpdateItem item={item} />
+                        <DeleteItem itemId={item.id} itemName={item.name} />
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}

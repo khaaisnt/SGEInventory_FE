@@ -1,5 +1,4 @@
 import React, { ButtonHTMLAttributes, forwardRef } from "react";
-import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -38,8 +37,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary: "bg-primary-600 text-white hover:bg-primary-900",
-      secondary: "bg-secondary-500 text-white hover:bg-secondary-600",
-      danger: "bg-red-500 text-white hover:bg-red-600",
+      secondary: "bg-gray-100 text-primary-600 hover:bg-gray-200",
+      danger: "bg-accent-red text-white hover:bg-red-700",
       success: "bg-green-500 text-white hover:bg-green-600",
       warning: "bg-yellow-500 text-white hover:bg-yellow-600",
       outline:
