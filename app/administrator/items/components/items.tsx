@@ -1,16 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useGetItems } from "../services/getItems.service";
 import CreateItem from "./createItem";
 import SearchBox from "@/components/molecules/searchbox";
 import DeleteItem from "./deleteItem";
 import UpdateItem from "./updateItem";
+import Pagination from "@/components/layout/pagination";
 
 export default function Items() {
-  const { data, isLoading, isError, error, refetch, isFetching } =
-    useGetItems();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data, isLoading, isError, error, refetch, isFetching } = useGetItems(
+    page,
+    limit,
+  );
   const items = data?.data ?? [];
+  const totalPages = data?.meta?.totalPages || 0;
 
   return (
     <div>
@@ -110,6 +117,14 @@ export default function Items() {
             </tbody>
           </table>
         </div>
+        {!isLoading && !isError && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            disabled={isFetching}
+          />
+        )}
       </div>
     </div>
   );

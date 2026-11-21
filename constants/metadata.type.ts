@@ -2,5 +2,5 @@ export interface MetaData {
   page: number;
   limit: number;
   total: number;
-  quantity: number;
+  totalPages: number;
 }
