@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Sidebar from "@/components/layout/sidebar";
 
 export const metadata: Metadata = {
-  title: "RackIT - Admin",
+  title: "RackIT - Admin loh ya😹",
   description: "Inventory Management System for SGE",
 };
 

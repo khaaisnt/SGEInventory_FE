@@ -62,7 +62,11 @@ export default function CreateItem() {
 
   return (
     <>
-      <Button type="button" onClick={() => setIsModalOpen(true)}>
+      <Button
+        type="button"
+        className="min-w-28"
+        onClick={() => setIsModalOpen(true)}
+      >
         Add Item
       </Button>
 

@@ -2,7 +2,8 @@
 
 import { Icon } from "@iconify/react";
 import { useGetItems } from "../services/getItems.service";
-import CreateItem from "./create-item";
+import CreateItem from "./createItem";
+import SearchBox from "@/components/molecules/searchbox";
 
 export default function Items() {
   const { data, isLoading, isError, error, refetch, isFetching } =
@@ -22,7 +23,8 @@ export default function Items() {
           <p className="text-xl font-bold text-primary-900">Available Items</p>
         </div>
 
-        <div>
+        <div className="flex gap-2">
+            <SearchBox onSearch={(query) => console.log(query)} />
             <CreateItem />
         </div>
       </div>
