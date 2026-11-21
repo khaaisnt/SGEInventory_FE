@@ -5,18 +5,17 @@
   --color-foreground: #171717;
   --color-primary-100: #e2f0fc;
   --color-primary-300: #86c8f3;
-  --color-primary-600: #1072b9;
+  --color-primary-600: #0f5c95;
   --color-primary-900: #103756;
-  --color-apricot-white: #F9FBEA;
-  
+  --color-apricot-white: #f9fbea;
 }
 
 .text-outline {
-  text-shadow: 
-    -1px -1px 0 #000,  
-     1.5px -1px 0 #000,
-    -1px  1.5px 0 #000,
-     1.5px  1.5px 0 #000;
+  text-shadow:
+    -1px -1px 0 #000,
+    1.5px -1px 0 #000,
+    -1px 1.5px 0 #000,
+    1.5px 1.5px 0 #000;
 }
 
 body {

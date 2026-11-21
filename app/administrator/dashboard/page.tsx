@@ -5,7 +5,10 @@ const DashboardAdmin = () => {
   return (
     <main>
       <section>
-        <Header title="Hello, there!" subtitle="Here's your request overview" />
+        <Header
+          title="Today’s Overview"
+          subtitle="Here’s a summary of requests that need your attention"
+        />
       </section>
     </main>
   );

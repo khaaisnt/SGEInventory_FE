@@ -13,22 +13,17 @@ async function getVerifiedRole(token?: string): Promise<UserRole | null> {
   const secret = process.env.CHIPER_KEY;
   if (!token || !secret) return null;
 
-  console.log("DEBUG TOKEN ADA?:", Boolean(token));
-  console.log("DEBUG SECRET ADA?:", Boolean(secret));
-
   try {
     const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(secret),
       { algorithms: ["HS256"] },
     );
-    console.log("DEBUG JWT PAYLOAD:", payload);
     const role =
       typeof payload.role === "string" ? payload.role.toUpperCase() : null;
 
     return role === "USER" || role === "ADMIN" ? role : null;
-  } catch (err) {
-    console.error("JWT VERIFY FAILED:", err);
+  } catch {
     return null;
   }
 }

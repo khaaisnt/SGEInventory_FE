@@ -52,8 +52,28 @@ const menuItems: Record<SidebarRole, SidebarItem[]> = {
   admin: [
     {
       name: "Dashboard",
-      path: "/admin/dashboard",
+      path: "/administrator/dashboard",
       icon: "material-symbols:dashboard-outline",
+    },
+    {
+      name: "Manage Borrow",
+      path: "/administrator/borrow",
+      icon: "coolicons:clipboard-list",
+    },
+    {
+      name: "Manage Storage",
+      path: "/administrator/storage",
+      icon: "keyline-icons:package-plus",
+    },
+    {
+      name: "Manage Inventory",
+      path: "/administrator/items",
+      icon: "majesticons:checkbox-list-detail",
+    },
+    {
+      name: "Log Users",
+      path: "/administrator/history",
+      icon: "andrsrxn:clock-hour-three",
     },
   ],
 };
