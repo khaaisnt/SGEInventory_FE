@@ -4,6 +4,7 @@ import Button from "@/components/atoms/button";
 import Dropdown from "@/components/atoms/dropdown";
 import Input from "@/components/atoms/input";
 import InputImage from "@/components/atoms/inputImage";
+import Textarea from "@/components/atoms/textarea";
 import Header from "@/components/layout/header";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
@@ -195,12 +196,10 @@ const StoragePage = () => {
               const file = event.target.files?.[0];
             }}
           />
-          <Input
-            type="text"
+          <Textarea
             label="Notes"
             placeholder="Anything we should know about these items?"
             fullWidth
-            multiline
           />
         </section>
       </div>

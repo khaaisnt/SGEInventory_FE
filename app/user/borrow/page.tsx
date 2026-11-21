@@ -1,6 +1,7 @@
 "use client";
 
 import Input from "@/components/atoms/input";
+import Textarea from "@/components/atoms/textarea";
 import Header from "@/components/layout/header";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
@@ -162,12 +163,10 @@ const BorrowPage = () => {
               Borrow Detail
             </h2>
           </div>
-          <Input
-            type="text"
+          <Textarea
             label="Borrowing Purpose"
             placeholder="e.g. for a seminar event, workshop, or project..."
             fullWidth
-            multiline
           />
           <div className="flex flex-col gap-2 md:flex-row">
             <Input

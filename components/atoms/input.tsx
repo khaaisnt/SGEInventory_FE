@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useState } from "react";
-import type { InputHTMLAttributes, Ref, TextareaHTMLAttributes } from "react";
+import type { InputHTMLAttributes } from "react";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
 
@@ -12,15 +12,9 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   fullWidth?: boolean;
   labelClassName?: string;
   wrapperClassName?: string;
-  multiline?: boolean;
-  rows?: number;
-  textareaProps?: Omit<
-    TextareaHTMLAttributes<HTMLTextAreaElement>,
-    keyof InputHTMLAttributes<HTMLInputElement>
-  >;
 }
 
-const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
@@ -34,9 +28,6 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
       disabled,
       required,
       type = "text",
-      multiline = false,
-      rows = 3,
-      textareaProps,
       placeholder,
       defaultValue,
       value,
@@ -92,41 +83,26 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
               aria-hidden="true"
               className={cn(
                 "pointer-events-none absolute left-3.5 text-xl",
-                multiline ? "top-3" : "top-1/2 -translate-y-1/2",
+                "top-1/2 -translate-y-1/2",
                 disabled ? "text-gray-300" : "text-gray-500",
                 error && "text-red-500",
               )}
             />
           )}
 
-          {multiline ? (
-            <textarea
-              id={inputId}
-              ref={ref as Ref<HTMLTextAreaElement>}
-              disabled={disabled}
-              required={required}
-              rows={rows}
-              placeholder={placeholder}
-              defaultValue={defaultValue}
-              value={value}
-              className={cn(fieldClassName, "resize-none")}
-              {...textareaProps}
-            />
-          ) : (
-            <input
-              id={inputId}
-              ref={ref as Ref<HTMLInputElement>}
-              disabled={disabled}
-              required={required}
-              placeholder={placeholder}
-              defaultValue={defaultValue}
-              value={value}
-              type={isPassword && isPasswordVisible ? "text" : type}
-              className={fieldClassName}
-              {...props}
-            />
-          )}
-          {!multiline && isPassword && (
+          <input
+            id={inputId}
+            ref={ref}
+            disabled={disabled}
+            required={required}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            value={value}
+            type={isPassword && isPasswordVisible ? "text" : type}
+            className={fieldClassName}
+            {...props}
+          />
+          {isPassword && (
             <button
               type="button"
               onClick={() => setIsPasswordVisible((visible) => !visible)}

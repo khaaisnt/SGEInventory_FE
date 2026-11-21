@@ -12,6 +12,12 @@ export interface Item {
 }
 
 export interface ItemResponse {
-    data: Item[];
-    meta: MetaData;
+  data: Item[];
+  meta: MetaData;
+}
+
+export interface DataCreateItem {
+  name: string;
+  description: string;
+  totalQuantity: number;
 }
