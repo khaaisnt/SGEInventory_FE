@@ -149,13 +149,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
             disabled={disabled}
             aria-label="Clear search"
             className="shrink-0 rounded-full p-1 text-slate-500 transition-colors hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Icon
-              icon="material-symbols:close"
-              aria-hidden="true"
-              className="size-4"
-            />
-          </button>
+          ></button>
         )}
         {showButton && (
           <button

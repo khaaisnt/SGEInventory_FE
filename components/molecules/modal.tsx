@@ -82,7 +82,7 @@ export default function Modal({
             type="button"
             onClick={onClose}
             aria-label="Tutup modal"
-            className="rounded-full p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-900"
+            className="rounded-full p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-primary-900 cursor-pointer"
           >
             <Icon
               icon="material-symbols:close"

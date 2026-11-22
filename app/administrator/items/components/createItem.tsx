@@ -11,10 +11,18 @@ import Textarea from "@/components/atoms/textarea";
 import type { DataCreateItem } from "../types/items.type";
 import { useCreateItem } from "../services/createItem.service";
 import { createItemSchema } from "../validations/items.schema";
+import Dropdown from "@/components/atoms/dropdown";
+import { useGetInstitutions } from "../services/getInstitutions.service";
 
 export default function CreateItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate, isPending } = useCreateItem();
+  const {
+    data: institutionsResponse,
+    isLoading: isInstitutionsLoading,
+    isError: isInstitutionsError,
+    error: institutionsError,
+  } = useGetInstitutions(1, 100);
   const {
     register,
     handleSubmit,
@@ -29,6 +37,7 @@ export default function CreateItem() {
       name: "",
       totalQuantity: 1,
       description: "",
+      lembagaId: 0,
     },
   });
 
@@ -88,7 +97,7 @@ export default function CreateItem() {
         <form
           id="create-item-form"
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
+          className="space-y-4 p-1"
         >
           <div className="flex items-end gap-2">
             <Input
@@ -144,6 +153,31 @@ export default function CreateItem() {
             <p className="-mt-3 text-xs text-red-500" role="alert">
               {errors.totalQuantity.message}
             </p>
+          )}
+          <Dropdown
+            label="Institution"
+            placeholder={"Select an institution"}
+            options={(institutionsResponse?.data ?? []).map((institution) => ({
+              label: institution.name,
+              value: String(institution.id),
+            }))}
+            disabled={isInstitutionsLoading || isInstitutionsError}
+            {...register("lembagaId", {
+              setValueAs: (value: string) => (value === "" ? 0 : Number(value)),
+            })}
+            error={errors.lembagaId?.message}
+          />
+          {isInstitutionsError && (
+            <div
+              className="-mt-3 flex items-center justify-between gap-3 text-xs text-red-600"
+              role="alert"
+            >
+              <span>
+                {institutionsError instanceof Error
+                  ? institutionsError.message
+                  : "Gagal memuat daftar lembaga."}
+              </span>
+            </div>
           )}
           <Textarea
             label="Notes"

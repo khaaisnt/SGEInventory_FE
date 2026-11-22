@@ -7,11 +7,13 @@ import { useForm, useWatch } from "react-hook-form";
 import Button from "@/components/atoms/button";
 import Input from "@/components/atoms/input";
 import Textarea from "@/components/atoms/textarea";
+import Dropdown from "@/components/atoms/dropdown";
 import Confirmation from "@/components/molecules/confirmation";
 import Modal from "@/components/molecules/modal";
 import type { Item, DataCreateItem } from "../types/items.type";
 import { useUpdateItem } from "../services/updateItem.service";
 import { createItemSchema } from "../validations/items.schema";
+import { useGetInstitutions } from "../services/getInstitutions.service";
 
 interface UpdateItemProps {
   item: Item;
@@ -21,6 +23,12 @@ export default function UpdateItem({ item }: UpdateItemProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const { mutate, isPending } = useUpdateItem();
+  const {
+    data: institutionsResponse,
+    isLoading: isInstitutionsLoading,
+    isError: isInstitutionsError,
+    error: institutionsError,
+  } = useGetInstitutions(1, 100);
   const {
     register,
     handleSubmit,
@@ -35,6 +43,7 @@ export default function UpdateItem({ item }: UpdateItemProps) {
       name: item.name,
       description: item.description ?? "",
       totalQuantity: item.totalQuantity,
+      lembagaId: item.lembaga.id,
     },
   });
   const totalQuantity = useWatch({
@@ -47,6 +56,7 @@ export default function UpdateItem({ item }: UpdateItemProps) {
       name: item.name,
       description: item.description ?? "",
       totalQuantity: item.totalQuantity,
+      lembagaId: item.lembaga.id,
     });
     setIsModalOpen(true);
   };
@@ -100,15 +110,7 @@ export default function UpdateItem({ item }: UpdateItemProps) {
         closeOnBackdrop={!isPending && !isConfirmationOpen}
         closeOnEscape={!isPending && !isConfirmationOpen}
         footer={
-          <div className="flex justify-end gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={closeModal}
-              disabled={isPending}
-            >
-              Cancel
-            </Button>
+          <div className="flex justify-end">
             <Button
               type="submit"
               form={`update-item-form-${item.id}`}
@@ -122,7 +124,7 @@ export default function UpdateItem({ item }: UpdateItemProps) {
         <form
           id={`update-item-form-${item.id}`}
           onSubmit={handleSubmit(() => setIsConfirmationOpen(true))}
-          className="space-y-4"
+          className="space-y-4 p-1"
         >
           <div className="flex items-end gap-2">
             <Input
@@ -179,6 +181,36 @@ export default function UpdateItem({ item }: UpdateItemProps) {
             <p className="-mt-3 text-xs text-red-500" role="alert">
               {errors.totalQuantity.message}
             </p>
+          )}
+          <Dropdown
+            label="Institution"
+            placeholder={
+              isInstitutionsLoading
+                ? "Loading institutions..."
+                : "Select an institution"
+            }
+            options={(institutionsResponse?.data ?? []).map((institution) => ({
+              label: institution.name,
+              value: String(institution.id),
+            }))}
+            disabled={isInstitutionsLoading || isInstitutionsError}
+            required
+            {...register("lembagaId", {
+              setValueAs: (value: string) => (value === "" ? 0 : Number(value)),
+            })}
+            error={errors.lembagaId?.message}
+          />
+          {isInstitutionsError && (
+            <div
+              className="-mt-3 flex items-center justify-between gap-3 text-xs text-red-600"
+              role="alert"
+            >
+              <span>
+                {institutionsError instanceof Error
+                  ? institutionsError.message
+                  : "Gagal memuat daftar lembaga."}
+              </span>
+            </div>
           )}
           <Textarea
             label="Description"
