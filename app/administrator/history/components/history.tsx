@@ -58,7 +58,7 @@ const History = () => {
               ) : isError ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={3}
                     className="p-4 sm:p-6 text-center"
                     role="alert"
                   >
@@ -91,7 +91,7 @@ const History = () => {
                     key={history.id}
                     className="border border-primary-900 text-primary-900"
                   >
-                    <td className="p-3 font-medium whitespace-nowrap">
+                    <td className="p-3 whitespace-nowrap">
                       {history.actor.fullName}
                     </td>
                     <td className="p-3 border whitespace-nowrap">

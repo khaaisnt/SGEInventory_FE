@@ -7,8 +7,8 @@ const ItemsPage = () => {
     <main>
       <section>
         <Header
-          title="Manage Storage"
-          subtitle="Check what each organization wants to store and decide."
+          title="Manage Inventory"
+          subtitle="Add, edit, or remove the items in the system."
         />
       </section>
 
