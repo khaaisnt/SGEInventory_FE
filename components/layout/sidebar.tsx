@@ -113,7 +113,7 @@ const Sidebar = ({ role, className }: SidebarProps) => {
         />
       )}
 
-      <div className="p-4">
+      <div className="p-0 md:p-4">
         <aside
           className={cn(
             "fixed inset-y-0 left-0 z-40 flex h-full max-h-screen w-64 flex-col shadow-md rounded-2xl bg-linear-to-b from-apricot-white to-primary-100 px-4 py-8 transition-all duration-300 md:sticky md:top-0 md:z-auto md:translate-x-0",

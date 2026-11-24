@@ -59,7 +59,7 @@ export default function Items() {
                 >
                   Item Name
                 </th>
-                <th scope="col" className="p-3 text-center whitespace-nowrap">
+                <th scope="col" className="p-3 text-left whitespace-nowrap">
                   Stock
                 </th>
                 <th

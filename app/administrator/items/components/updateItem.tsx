@@ -131,7 +131,6 @@ export default function UpdateItem({ item }: UpdateItemProps) {
               label="Item name"
               placeholder="Input item name"
               fullWidth
-              required
               wrapperClassName="mb-0 min-w-0 flex-1"
               {...register("name")}
               error={errors.name?.message}
@@ -194,7 +193,6 @@ export default function UpdateItem({ item }: UpdateItemProps) {
               value: String(institution.id),
             }))}
             disabled={isInstitutionsLoading || isInstitutionsError}
-            required
             {...register("lembagaId", {
               setValueAs: (value: string) => (value === "" ? 0 : Number(value)),
             })}
