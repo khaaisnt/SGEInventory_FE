@@ -29,6 +29,11 @@ const menuItems: Record<SidebarRole, SidebarItem[]> = {
       icon: "material-symbols:dashboard-outline",
     },
     {
+      name: "Information",
+      path: "/user/info",
+      icon: "ant-design:info-circle-outlined",
+    },
+    {
       name: "Borrow Request",
       path: "/user/borrow",
       icon: "coolicons:clipboard-list",
