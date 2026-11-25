@@ -27,6 +27,10 @@ export interface Storage {
   updatedAt: string;
 }
 
+export interface StorageDetailResponse {
+  data: Storage;
+}
+
 export interface StorageResponse {
   data: Storage[];
   meta: MetaData;
