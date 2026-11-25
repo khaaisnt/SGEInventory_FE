@@ -9,20 +9,24 @@ export interface Borrow {
   user: {
     id: number;
     fullName: string;
+    contact?: string;
+    nim?: string;
   };
   lembaga: {
     id: number;
     name: string;
   };
-  items: [
-    {
-      itemId: number;
-      itemName: string;
-      quantity: number;
-    },
-  ];
+  items: {
+    itemId: number;
+    itemName: string;
+    quantity: number;
+  }[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface BorrowDetailResponse {
+  data: Borrow;
 }
 
 export interface BorrowsResponse {

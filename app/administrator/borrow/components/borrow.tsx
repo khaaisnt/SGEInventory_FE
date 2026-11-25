@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { useGetBorrows } from "../services/getBorrows.service";
 import { formatDateWIB } from "@/lib/utils";
 import Pagination from "@/components/layout/pagination";
+import Badge from "@/components/atoms/badge";
+import DetailBorrow from "./detailBorrow";
 
 export default function Borrow() {
   const [page, setPage] = useState(1);
@@ -42,21 +44,21 @@ export default function Borrow() {
                 <th scope="col" className="p-3 text-left whitespace-nowrap">
                   Institution
                 </th>
-                <th scope="col" className="p-3 text-center whitespace-nowrap">
-                  Action
+                <th scope="col" className="p-3 text-center">
+                  Status Requests
                 </th>
                 <th
                   scope="col"
-                  className="p-3 text-center min-w-50 rounded-tr-2xl"
+                  className="p-3 text-center whitespace-nowrap rounded-tr-2xl"
                 >
-                  Status Requests
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={3} className="p-6 text-center text-gray-500">
+                  <td colSpan={5} className="p-6 text-center text-gray-500">
                     Loading borrow request...
                   </td>
                 </tr>
@@ -105,8 +107,12 @@ export default function Borrow() {
                     <td className="p-3 border whitespace-nowrap">
                       {borrow.lembaga.name}
                     </td>
-                    <td className="p-3 border whitespace-nowrap">tes</td>
-                    <td className="p-3 border whitespace-nowrap">tes</td>
+                    <td className="p-3 border text-center whitespace-nowrap">
+                      <Badge status={borrow.status} />
+                    </td>
+                    <td className="p-3 border text-center whitespace-nowrap">
+                      <DetailBorrow borrow={borrow} />
+                    </td>
                   </tr>
                 ))
               )}
