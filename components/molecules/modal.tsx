@@ -69,7 +69,7 @@ export default function Modal({
             {eyebrow && (
               <p
                 id={eyebrowId}
-                className="mb-2 flex justify-start text-center max-w-32 rounded-md bg-primary-100 px-2 py-1 text-xs font-semibold text-primary-900"
+                className="mb-2 inline-flex justify-center text-center max-w-32 rounded-md bg-primary-100 px-2 py-1 text-xs font-semibold text-primary-900"
               >
                 {eyebrow}
               </p>
