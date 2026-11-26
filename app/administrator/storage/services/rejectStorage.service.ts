@@ -5,17 +5,17 @@ import type { dataResponse } from "@/types/response";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const BORROWS_QUERY_KEY = [PREFIX_KEY.GET, "GET_BORROWS"];
-const BORROW_URL = "/borrowings";
+const STORAGES_QUERY_KEY = [PREFIX_KEY.GET, "GET_STORAGES"];
+const STORAGE_URL = "/consignments";
 
-export const useApproveBorrow = () => {
+export const useRejectStorage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (borrowId: number) => {
+    mutationFn: async (storageId: number) => {
       try {
         const { data: response } = await axiosInstance.patch<dataResponse>(
-          `${BORROW_URL}/${borrowId}/approve`,
+          `${STORAGE_URL}/${storageId}/reject`,
         );
         return response;
       } catch (error: unknown) {
@@ -25,16 +25,16 @@ export const useApproveBorrow = () => {
             ? error.message
             : undefined;
 
-        showErrorToast(errorMessage || "Gagal menyetujui peminjaman.");
+        showErrorToast(errorMessage || "Gagal menolak penitipan.");
         throw error;
       }
     },
-    onSuccess: async (response, borrowId) => {
-      showSuccessToast(response.message || "Peminjaman berhasil disetujui.");
+    onSuccess: async (response, storageId) => {
+      showSuccessToast(response.message || "Penitipan berhasil ditolak.");
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: BORROWS_QUERY_KEY }),
+        queryClient.invalidateQueries({ queryKey: STORAGES_QUERY_KEY }),
         queryClient.invalidateQueries({
-          queryKey: [PREFIX_KEY.GET, "GET_BORROW", borrowId],
+          queryKey: [PREFIX_KEY.GET, "GET_STORAGE", storageId],
         }),
       ]);
     },

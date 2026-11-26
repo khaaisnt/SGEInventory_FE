@@ -11,18 +11,18 @@ export interface Storage {
   user: {
     id: number;
     fullName: string;
+    contact?: string;
+    nim?: string;
   };
   lembaga: {
     id: number;
     name: string;
   };
-  items: [
-    {
-      id: number;
-      name: string;
-      quantity: number;
-    },
-  ];
+  items: {
+    id: number;
+    name: string;
+    quantity: number;
+  }[];
   createdAt: string;
   updatedAt: string;
 }

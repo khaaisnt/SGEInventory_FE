@@ -6,6 +6,7 @@ import { useGetStorages } from "../services/getStorages.service";
 import { formatDateWIB } from "@/lib/utils";
 import Badge from "@/components/atoms/badge";
 import Pagination from "@/components/layout/pagination";
+import DetailStorage from "./detailStorage";
 
 export default function Storage() {
   const [page, setPage] = useState(1);
@@ -104,7 +105,7 @@ export default function Storage() {
                       <Badge status={storage.status} />
                     </td>
                     <td className="p-3 border text-center whitespace-nowrap">
-                      {/* <DetailStorage storage={storage} /> */}
+                      <DetailStorage storage={storage} />
                     </td>
                   </tr>
                 ))

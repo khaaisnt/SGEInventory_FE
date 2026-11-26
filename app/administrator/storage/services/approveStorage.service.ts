@@ -34,7 +34,7 @@ export const useApproveStorage = () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: STORAGES_QUERY_KEY }),
         queryClient.invalidateQueries({
-          queryKey: [PREFIX_KEY.GET, "GET_BORROW", storageId],
+          queryKey: [PREFIX_KEY.GET, "GET_STORAGE", storageId],
         }),
       ]);
     },
