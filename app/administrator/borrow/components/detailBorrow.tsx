@@ -8,7 +8,10 @@ import type { Borrow } from "../types/borrow.type";
 import { useGetborrow } from "../services/getBorrow.service";
 import { useApproveBorrow } from "../services/approveBorrow.service";
 import { useRejectBorrow } from "../services/rejectBorrow.service";
+import { useApproveBorrowReturn } from "../services/approveReturn.service";
+import { useRejectBorrowReturn } from "../services/rejectReturn.service";
 import { formatDateWIB } from "@/lib/utils";
+import Image from "next/image";
 
 interface DetailBorrowProps {
   borrow: Borrow;
@@ -26,9 +29,31 @@ export default function DetailBorrow({ borrow }: DetailBorrowProps) {
   } = useGetborrow(borrow.id, isModalOpen);
   const { mutate: approveBorrow, isPending: isApproving } = useApproveBorrow();
   const { mutate: rejectBorrow, isPending: isRejecting } = useRejectBorrow();
-  const isPending = isApproving || isRejecting;
+  const { mutate: approveReturn, isPending: isApprovingReturn } =
+    useApproveBorrowReturn();
+  const { mutate: rejectReturn, isPending: isRejectingReturn } =
+    useRejectBorrowReturn();
+  const isPending =
+    isApproving || isRejecting || isApprovingReturn || isRejectingReturn;
   const detail = response?.data ?? borrow;
-  const canReview = detail.status.trim().toUpperCase() === "PENDING";
+  const status = detail.status.trim().toUpperCase();
+  const canReviewBorrow = status === "PENDING";
+  const canReviewReturn = status === "RETURN_PENDING";
+
+  const handleReview = (decision: "approve" | "reject") => {
+    const mutation =
+      decision === "approve"
+        ? canReviewReturn
+          ? approveReturn
+          : approveBorrow
+        : canReviewReturn
+          ? rejectReturn
+          : rejectBorrow;
+
+    mutation(detail.id, {
+      onSuccess: () => setIsModalOpen(false),
+    });
+  };
 
   const closeModal = () => {
     if (!isPending) setIsModalOpen(false);
@@ -52,18 +77,14 @@ export default function DetailBorrow({ borrow }: DetailBorrowProps) {
         closeOnBackdrop={!isPending}
         closeOnEscape={!isPending}
         footer={
-          !isLoading && !isError && canReview ? (
+          !isLoading && !isError && (canReviewBorrow || canReviewReturn) ? (
             <div className="flex items-center justify-between gap-3">
               <Button
                 type="button"
                 variant="danger"
-                onClick={() =>
-                  rejectBorrow(detail.id, {
-                    onSuccess: () => setIsModalOpen(false),
-                  })
-                }
+                onClick={() => handleReview("reject")}
                 disabled={isPending}
-                loading={isRejecting}
+                loading={isRejecting || isRejectingReturn}
                 className="min-w-24 rounded-full"
               >
                 Reject
@@ -71,13 +92,9 @@ export default function DetailBorrow({ borrow }: DetailBorrowProps) {
               <Button
                 type="button"
                 variant="success"
-                onClick={() =>
-                  approveBorrow(detail.id, {
-                    onSuccess: () => setIsModalOpen(false),
-                  })
-                }
+                onClick={() => handleReview("approve")}
                 disabled={isPending}
-                loading={isApproving}
+                loading={isApproving || isApprovingReturn}
                 className="min-w-24 rounded-full"
               >
                 Approve
@@ -153,7 +170,29 @@ export default function DetailBorrow({ borrow }: DetailBorrowProps) {
               </p>
             </section>
 
-            {!canReview && (
+            {canReviewReturn && detail.returnPhotoUrl && (
+              <section>
+                <h3 className="mb-2 text-sm text-slate-500 text-left">
+                  Return Photo
+                </h3>
+                <a
+                  href={detail.returnPhotoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 p-2"
+                >
+                  <Image
+                    src={detail.returnPhotoUrl}
+                    alt="Photo of returned items"
+                    className="max-h-64 w-full rounded-xl object-contain"
+                    width={300}
+                    height={300}
+                  />
+                </a>
+              </section>
+            )}
+
+            {!canReviewBorrow && !canReviewReturn && (
               <div className="flex justify-center">
                 <Badge status={detail.status} />
               </div>

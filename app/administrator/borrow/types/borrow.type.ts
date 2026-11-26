@@ -6,6 +6,7 @@ export interface Borrow {
   purpose: string;
   pickUpDate: string;
   returnDate: string;
+  returnPhotoUrl?: string | null;
   user: {
     id: number;
     fullName: string;

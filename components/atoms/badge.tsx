@@ -9,6 +9,7 @@ const statusStyles: Record<string, string> = {
   PENDING: "bg-amber-400 text-white",
   APPROVED: "bg-accent-green text-white",
   REJECTED: "bg-accent-red text-white",
+  RETURN_PENDING: "bg-sky-400 text-white",
 };
 
 export default function Badge({ status, className }: BadgeProps) {
