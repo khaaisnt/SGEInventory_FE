@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 import type { HistoryMe } from "@/app/user/history/types/history.type";
 import ReturnBorrow from "./returnBorrow";
+import DetailModal from "./detailModal";
 
 interface InfoCardProps {
   request: HistoryMe;
@@ -32,9 +32,9 @@ const statusStyles: Record<
     line: "bg-red-400",
   },
   RETURNED: {
-    accent: "border-primary-600",
-    badge: "border-primary-600 text-primary-600",
-    line: "bg-primary-600",
+    accent: "border-gray-400",
+    badge: "border-gray-400 text-gray-400",
+    line: "bg-gray-400",
   },
   RETURN_PENDING: {
     accent: "border-sky-400",
@@ -155,16 +155,12 @@ export default function InfoCard({ request }: InfoCardProps) {
             />
             {statusMessage}
           </p>
-          {isBorrowing && status === "APPROVED" ? (
-            <ReturnBorrow borrowingId={detail.id} />
-          ) : status === "PENDING" ? (
-            <Link
-              href="/user/history"
-              className="inline-flex items-center justify-center rounded-2xl border-2 border-white bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition-colors hover:bg-primary-900"
-            >
-              Detail
-            </Link>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-2">
+            <DetailModal request={request} />
+            {isBorrowing && status === "APPROVED" && (
+              <ReturnBorrow borrowingId={detail.id} />
+            )}
+          </div>
         </div>
       </div>
     </article>
