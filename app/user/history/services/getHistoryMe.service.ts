@@ -4,16 +4,20 @@ import { useQuery } from "@tanstack/react-query";
 import { HistoryMeResponse } from "../types/history.type";
 
 const PRIMARY_QUERY_KEY = "GET_HISTORY_ME";
-const URL = "/borrowings/me";
+const URL = "/history/me";
 
-export const useGetHistoryMe = (page: number, limit: number) => {
-  const keys = [PREFIX_KEY.GET, PRIMARY_QUERY_KEY, page, limit];
+export const useGetHistoryMe = (
+  page: number,
+  limit: number,
+  search: string,
+) => {
+  const keys = [PREFIX_KEY.GET, PRIMARY_QUERY_KEY, page, limit, search];
 
   return useQuery({
     queryKey: keys,
     queryFn: async () => {
       const response = await axiosInstance.get<HistoryMeResponse>(URL, {
-        params: { page, limit },
+        params: { page, limit, search },
       });
       return response.data;
     },

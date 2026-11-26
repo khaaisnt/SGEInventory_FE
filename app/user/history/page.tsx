@@ -1,5 +1,6 @@
 import Header from "@/components/layout/header";
 import React from "react";
+import HistoryMe from "./components/history";
 
 const HistoryPage = () => {
   return (
@@ -11,7 +12,9 @@ const HistoryPage = () => {
         />
       </section>
 
-      <section className="mt-8"></section>
+      <section className="mt-8">
+        <HistoryMe />
+      </section>
     </main>
   );
 };
