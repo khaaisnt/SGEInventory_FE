@@ -161,9 +161,10 @@ export default function InfoCard({ request }: InfoCardProps) {
           </p>
           <div className="flex flex-wrap items-center gap-2">
             <DetailModal request={request} />
-            {isBorrowing && status === "APPROVED" && (
-              <ReturnBorrow borrowingId={detail.id} />
-            )}
+            {isBorrowing &&
+              (status === "APPROVED" || status === "RETURN_REJECTED") && (
+                <ReturnBorrow borrowingId={detail.id} />
+              )}
           </div>
         </div>
       </div>
