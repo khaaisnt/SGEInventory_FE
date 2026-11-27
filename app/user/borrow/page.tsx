@@ -44,8 +44,18 @@ const BorrowPage = () => {
   const addBorrowItem = () => {
     setBorrowItems((items) => [
       ...items,
-      { id: items.length + 1, value: "", quantity: 1 },
+      {
+        id: Math.max(0, ...items.map((item) => item.id)) + 1,
+        value: "",
+        quantity: 1,
+      },
     ]);
+  };
+
+  const removeBorrowItem = (id: number) => {
+    setBorrowItems((items) =>
+      items.length > 1 ? items.filter((item) => item.id !== id) : items,
+    );
   };
 
   const updateQuantity = (id: number, change: number) => {
@@ -178,6 +188,19 @@ const BorrowPage = () => {
             <ul className="mb-2 space-y-3">
               {borrowItems.map((item, index) => (
                 <li key={item.id} className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => removeBorrowItem(item.id)}
+                    disabled={borrowItems.length === 1 || isPending}
+                    aria-label={`Hapus item ${index + 1}`}
+                    className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-primary-600 text-white transition-colors hover:bg-primary-900 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      icon="material-symbols:close"
+                      className="size-5"
+                    />
+                  </button>
                   <Dropdown
                     aria-label={`Item ${index + 1}`}
                     placeholder={

@@ -10,6 +10,7 @@ const statusStyles: Record<string, string> = {
   APPROVED: "bg-accent-green text-white",
   REJECTED: "bg-accent-red text-white",
   RETURN_PENDING: "bg-sky-400 text-white",
+  RETURN_REJECTED: "bg-accent-red text-white",
 };
 
 export default function Badge({ status, className }: BadgeProps) {
@@ -21,7 +22,7 @@ export default function Badge({ status, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex min-w-28 items-center justify-center rounded-full border-[3px] border-white px-5 py-1.5 text-sm font-bold shadow-md",
+        "inline-flex min-w-28 items-center justify-center uppercase rounded-full border-[3px] border-white px-5 py-1.5 text-sm font-bold shadow-md",
         statusStyles[normalizedStatus] ?? "bg-slate-400 text-white",
         className,
       )}

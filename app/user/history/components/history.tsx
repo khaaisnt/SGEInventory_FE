@@ -42,10 +42,10 @@ export default function HistoryMe() {
                 >
                   Time Activity
                 </th>
-                <th
-                  scope="col"
-                  className="p-3 text-left min-w-50 rounded-tr-2xl"
-                >
+                <th scope="col" className="p-3 text-left">
+                  Request Type
+                </th>
+                <th scope="col" className="p-3 text-left rounded-tr-2xl">
                   Requests Activity
                 </th>
               </tr>
@@ -53,7 +53,7 @@ export default function HistoryMe() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={2} className="p-6 text-center text-gray-500">
+                  <td colSpan={3} className="p-6 text-center text-gray-500">
                     Loading history...
                   </td>
                 </tr>
@@ -97,6 +97,11 @@ export default function HistoryMe() {
                       {formatDateWIB(history.createdAt)}
                     </td>
                     <td className="p-3 border-r">{history.type}</td>
+                    <td className="p-3 border">
+                      {history.type === "BORROWING"
+                        ? history.borrowing.status
+                        : history.consignment.status}
+                    </td>
                   </tr>
                 ))
               )}

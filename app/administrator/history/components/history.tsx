@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { useGetHistory } from "../services/getHistory.service";
 import { formatDateWIB } from "@/lib/utils";
 import Pagination from "@/components/layout/pagination";
+import { Icon } from "@iconify/react";
+import SearchBox from "@/components/molecules/searchbox";
 
 const History = () => {
   const [page, setPage] = useState(1);
@@ -24,7 +26,25 @@ const History = () => {
 
   return (
     <div>
-      <div></div>
+      <div className="mb-4 sm:mb-8 bg-white rounded-2xl shadow-md p-4 md:p-6">
+        <div className="flex gap-2 items-center mb-4 sm:mb-2">
+          <div className="bg-primary-100 p-2 rounded-xl">
+            <Icon
+              icon={"majesticons:checkbox-list-detail"}
+              className="text-xl text-primary-900"
+            />
+          </div>
+          <p className="text-xl font-bold text-primary-900">User Logs</p>
+        </div>
+
+        <SearchBox
+          onValueChange={handleSearch}
+          onSearch={handleSearch}
+          placeholder="Search for anything..."
+          debounceTime={0}
+          showButton={false}
+        />
+      </div>
 
       <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6">
         <div className="overflow-x-auto pb-4">
@@ -39,6 +59,9 @@ const History = () => {
                 </th>
                 <th scope="col" className="p-3 text-left whitespace-nowrap">
                   Time Activity
+                </th>
+                <th scope="col" className="p-3 text-left whitespace-nowrap">
+                  Request Type
                 </th>
                 <th
                   scope="col"
@@ -97,7 +120,8 @@ const History = () => {
                     <td className="p-3 border whitespace-nowrap">
                       {formatDateWIB(history.createdAt)}
                     </td>
-                    <td className="p-3 border-r">{history.requestType}</td>
+                    <td className="p-3 border">{history.requestType}</td>
+                    <td className="p-3">{history.activity}</td>
                   </tr>
                 ))
               )}

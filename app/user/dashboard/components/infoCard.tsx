@@ -41,6 +41,11 @@ const statusStyles: Record<
     badge: "border-sky-500 text-sky-600",
     line: "bg-sky-400",
   },
+  RETURN_REJECTED: {
+    accent: "border-red-400",
+    badge: "border-red-500 text-red-600",
+    line: "bg-red-400",
+  },
 };
 
 function formatRequestDate(start: string, end: string) {
@@ -97,11 +102,10 @@ export default function InfoCard({ request }: InfoCardProps) {
           ? "Items returned"
           : status === "RETURN_PENDING"
             ? "Waiting for return verification"
-            : "Request was rejected";
-  const statusLabel =
-    status === "RETURN_PENDING"
-      ? "Return Pending"
-      : status.charAt(0) + status.slice(1).toLowerCase();
+            : status === "RETURN_REJECTED"
+              ? "Return was rejected"
+              : "Request was rejected";
+  const statusLabel = status.replaceAll("_", " ");
 
   return (
     <article
@@ -146,7 +150,7 @@ export default function InfoCard({ request }: InfoCardProps) {
               icon={
                 status === "APPROVED"
                   ? "material-symbols:assignment-turned-in"
-                  : status === "REJECTED"
+                  : status === "REJECTED" || status === "RETURN_REJECTED"
                     ? "material-symbols:cancel"
                     : "material-symbols:hourglass-top"
               }
